@@ -22,3 +22,4 @@ export default function RoomCard({room}){
     </div>
   )
 }
+// card fix
