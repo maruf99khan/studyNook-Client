@@ -154,3 +154,4 @@ export default function RoomDetails(){
   )
 }
 // details booked
+// booking cost live
