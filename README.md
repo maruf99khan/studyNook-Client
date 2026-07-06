@@ -10,3 +10,4 @@ Features:
 - Owner-only CRUD for rooms with bookingCount increment
 - Hourly booking modal (08:00-20:00) with live total cost and $gte/$lte overlap check plus $push/$pull user bookings
 - My Bookings with cancel for future confirmed bookings and responsive warm-paper design
+- deployment to vercel
