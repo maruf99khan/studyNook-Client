@@ -32,7 +32,7 @@ export default function Home(){
           </div>
         </div>
         <div className="relative h-[380px] md:h-[440px]">
-          <img src="https://images.unsplash.com/photo-1526245991693-74a0f82f2851?w=800&q=80" className="absolute top-0 right-0 w-[68%] h-[60%] object-cover rounded-2xl border border-line shadow" alt="" />
+          <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800&q=80" className="absolute top-0 right-0 w-[68%] h-[60%] object-cover rounded-2xl border border-line shadow" alt="" />
           <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80" className="absolute bottom-0 left-0 w-[60%] h-[52%] object-cover rounded-2xl border border-line shadow" alt="" />
           <div className="absolute bottom-6 right-6 bg-white border border-line rounded-xl p-3 shadow flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-forest text-white grid place-items-center text-xs">✓</div>
@@ -88,4 +88,3 @@ export default function Home(){
     </div>
   )
 }
-// hero done

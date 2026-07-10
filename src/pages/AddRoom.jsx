@@ -55,4 +55,3 @@ export default function AddRoom(){
     </div>
   )
 }
-// add room form ok

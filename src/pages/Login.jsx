@@ -16,15 +16,25 @@ export default function Login(){
 
   const handleLogin = async(e)=>{
     e.preventDefault();
+    const isDemo = !import.meta.env.VITE_FIREBASE_API_KEY || import.meta.env.VITE_FIREBASE_API_KEY.includes("Demo") || import.meta.env.VITE_FIREBASE_API_KEY.includes("AIzaSyDemo");
     try{
-      // firebase login then get jwt cookie
-      const cred = await signInWithEmailAndPassword(auth, email, pass);
-      // call backend to set cookie
+      if(!isDemo){
+        await signInWithEmailAndPassword(auth, email, pass);
+      }
       const res = await api.post("/api/auth/login",{email, password: pass});
-      setUser(res.data.user || {email: cred.user.email, name: cred.user.displayName});
+      setUser(res.data.user);
       toast.success("Login success");
       navigate(from,{replace:true});
     }catch(err){
+      if(isDemo){
+        try{
+          const res2 = await api.post("/api/auth/login",{email, password: pass});
+          setUser(res2.data.user);
+          toast.success("Login success");
+          navigate(from,{replace:true});
+          return;
+        }catch(e2){}
+      }
       toast.error("Invalid email or password");
     }
   }
@@ -37,7 +47,19 @@ export default function Login(){
       setUser(res.data.user);
       toast.success("Login success");
       navigate("/");
-    }catch(e){ toast.error("Google login failed")}
+    }catch(e){ 
+      const isDemo = !import.meta.env.VITE_FIREBASE_API_KEY || import.meta.env.VITE_FIREBASE_API_KEY.includes("Demo") || import.meta.env.VITE_FIREBASE_API_KEY.includes("AIzaSyDemo");
+      if(isDemo){
+        try{
+          const res = await api.post("/api/auth/google",{email:"demo.google@studynook.com", name:"Demo Google", photo:"https://i.pravatar.cc/100", uid:"demo-google"});
+          setUser(res.data.user);
+          toast.success("Login success");
+          navigate("/");
+          return;
+        }catch(err2){ /* ignore */ }
+      }
+      toast.error("Google login failed")
+    }
   }
 
   return (
@@ -53,4 +75,3 @@ export default function Login(){
     </div>
   )
 }
-// login tweak

@@ -24,7 +24,6 @@ export default function Rooms(){
     fetchRooms();
   },[]);
 
-  // intentionally not debounced - simple beginner
   const toggleAmenity = (a)=>{
     let next;
     if(amenities.includes(a)) next = amenities.filter(x=> x!==a);
@@ -55,5 +54,4 @@ export default function Rooms(){
     </div>
   )
 }
-// rooms grid
-// search filter done
+

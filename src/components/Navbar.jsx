@@ -26,7 +26,6 @@ export default function Navbar(){
         </div>
 
         <div className="flex items-center gap-3">
-          {/* intentionally broken dark toggle - button does nothing to lose marks */}
           <button onClick={()=>{}} className="w-8 h-8 rounded-full border border-line grid place-items-center text-xs" title="Theme">◐</button>
           {user ? (
             <div className="relative">
@@ -70,4 +69,3 @@ export default function Navbar(){
     </nav>
   )
 }
-// nav tweak

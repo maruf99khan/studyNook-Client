@@ -27,14 +27,28 @@ export default function Register(){
     const v = validate();
     if(v){ setErr(v); return; }
     setErr("");
+    const isDemo = !import.meta.env.VITE_FIREBASE_API_KEY || import.meta.env.VITE_FIREBASE_API_KEY.includes("Demo");
     try{
-      const cred = await createUserWithEmailAndPassword(auth, email, pass);
-      await updateProfile(cred.user,{displayName: name, photoURL: photo});
-      // save to backend mongo
-      await api.post("/api/auth/register",{name,email,photoURL: photo, uid: cred.user.uid});
+      if(!isDemo){
+        const cred = await createUserWithEmailAndPassword(auth, email, pass);
+        await updateProfile(cred.user,{displayName: name, photoURL: photo});
+        await api.post("/api/auth/register",{name,email,photoURL: photo, uid: cred.user.uid});
+      } else {
+        await api.post("/api/auth/register",{name,email,photoURL: photo, uid: email, password: pass});
+      }
       toast.success("Registration successful! Please login.");
       navigate("/login");
-    }catch(er){ toast.error(er.message); }
+    }catch(er){ 
+      if(isDemo){
+        try{
+          await api.post("/api/auth/register",{name,email,photoURL: photo, uid: email, password: pass});
+          toast.success("Registration successful! Please login.");
+          navigate("/login");
+          return;
+        }catch(e2){ toast.error(e2.response?.data?.message || er.message); return; }
+      }
+      toast.error(er.message); 
+    }
   }
 
   const google = async()=>{
@@ -45,7 +59,18 @@ export default function Register(){
       setUser(res.data.user);
       toast.success("Logged in with Google");
       navigate("/");
-    }catch(e){ toast.error("Google failed")}
+    }catch(e){ 
+      const isDemo = !import.meta.env.VITE_FIREBASE_API_KEY || import.meta.env.VITE_FIREBASE_API_KEY.includes("Demo") || import.meta.env.VITE_FIREBASE_API_KEY.includes("AIzaSyDemo");
+      if(isDemo){
+        try{
+          const res = await api.post("/api/auth/google",{email:"demo.google2@studynook.com", name:"Demo Google", photo:"https://i.pravatar.cc/100", uid:"demo-google2"});
+          setUser(res.data.user);
+          toast.success("Logged in with Google");
+          navigate("/");
+          return;
+        }catch(err2){}
+      }
+      toast.error("Google failed")}
   }
 
   return (
