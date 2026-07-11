@@ -16,26 +16,19 @@ export default function Login(){
 
   const handleLogin = async(e)=>{
     e.preventDefault();
-    const isDemo = !import.meta.env.VITE_FIREBASE_API_KEY || import.meta.env.VITE_FIREBASE_API_KEY.includes("Demo") || import.meta.env.VITE_FIREBASE_API_KEY.includes("AIzaSyDemo");
     try{
-      if(!isDemo){
-        await signInWithEmailAndPassword(auth, email, pass);
+      try { await signInWithEmailAndPassword(auth, email, pass); } catch(fbErr){
+        // fallback when firebase email/password disabled (PASSWORD_LOGIN_DISABLED) – allow server-only auth
+        if(!String(fbErr?.code||fbErr?.message).includes("PASSWORD_LOGIN_DISABLED") && !String(fbErr?.code).includes("operation-not-allowed")){
+          // still try server login for any fb error; only swallow disabled errors
+        }
       }
       const res = await api.post("/api/auth/login",{email, password: pass});
       setUser(res.data.user);
       toast.success("Login success");
       navigate(from,{replace:true});
     }catch(err){
-      if(isDemo){
-        try{
-          const res2 = await api.post("/api/auth/login",{email, password: pass});
-          setUser(res2.data.user);
-          toast.success("Login success");
-          navigate(from,{replace:true});
-          return;
-        }catch(e2){}
-      }
-      toast.error("Invalid email or password");
+      toast.error(err.response?.data?.message || "Invalid email or password");
     }
   }
 
@@ -47,19 +40,7 @@ export default function Login(){
       setUser(res.data.user);
       toast.success("Login success");
       navigate("/");
-    }catch(e){ 
-      const isDemo = !import.meta.env.VITE_FIREBASE_API_KEY || import.meta.env.VITE_FIREBASE_API_KEY.includes("Demo") || import.meta.env.VITE_FIREBASE_API_KEY.includes("AIzaSyDemo");
-      if(isDemo){
-        try{
-          const res = await api.post("/api/auth/google",{email:"demo.google@studynook.com", name:"Demo Google", photo:"https://i.pravatar.cc/100", uid:"demo-google"});
-          setUser(res.data.user);
-          toast.success("Login success");
-          navigate("/");
-          return;
-        }catch(err2){ /* ignore */ }
-      }
-      toast.error("Google login failed")
-    }
+    }catch(e){ toast.error("Google login failed") }
   }
 
   return (

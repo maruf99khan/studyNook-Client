@@ -25,15 +25,10 @@ export default function Home(){
           <h1 className="font-display text-[36px] md:text-[52px] leading-[0.95] tracking-tight text-ink font-bold">Find Your Perfect<br/><span className="text-gold">Study Room</span></h1>
           <p className="text-muted mt-4 max-w-[48ch] leading-relaxed">Browse and book quiet, private study rooms in your library. List your own room and earn.</p>
           <Link to="/rooms" className="inline-block mt-6 px-7 py-3 bg-ink text-paper rounded-full text-sm font-medium">Explore Rooms →</Link>
-          <div className="flex gap-6 mt-8 text-sm">
-            <div><div className="font-bold text-ink text-lg">120+</div><div className="text-muted text-xs">Rooms listed</div></div>
-            <div className="w-px bg-line"></div>
-            <div><div className="font-bold text-ink text-lg">4.8★</div><div className="text-muted text-xs">Avg rating</div></div>
-          </div>
         </div>
         <div className="relative h-[380px] md:h-[440px]">
-          <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800&q=80" className="absolute top-0 right-0 w-[68%] h-[60%] object-cover rounded-2xl border border-line shadow" alt="" />
-          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80" className="absolute bottom-0 left-0 w-[60%] h-[52%] object-cover rounded-2xl border border-line shadow" alt="" />
+          <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800&q=80" className="absolute top-0 right-0 w-[68%] h-[60%] object-cover rounded-2xl border border-line shadow" alt="Library study area" />
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80" className="absolute bottom-0 left-0 w-[60%] h-[52%] object-cover rounded-2xl border border-line shadow" alt="Study desk with lamp" />
           <div className="absolute bottom-6 right-6 bg-white border border-line rounded-xl p-3 shadow flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-forest text-white grid place-items-center text-xs">✓</div>
             <div><div className="text-xs font-semibold text-ink">Instant Booking</div><div className="text-[11px] text-muted">No double booking</div></div>
@@ -80,8 +75,8 @@ export default function Home(){
           <p className="text-muted mt-3 leading-relaxed">Owners list rooms they control. Students book what they need. No noise, no double-booking, no hidden fees. Built for the library, not the marketplace.</p>
           <ul className="mt-4 space-y-2 text-sm">
             <li className="flex gap-2"><span className="text-forest">—</span> Floor-wise browsing and seat capacity at a glance</li>
-            <li className="flex gap-2"><span className="text-forest">—</span> Hourly rate, amenities, and booking count shown</li>
-            <li className="flex gap-2"><span className="text-forest">—</span> Owner-only edit/delete, secure JWT httpOnly cookie</li>
+            <li className="flex gap-2"><span className="text-forest">—</span> Hourly rate, amenities and availability at a glance</li>
+            <li className="flex gap-2"><span className="text-forest">—</span> Private controls — edit or remove your rooms anytime</li>
           </ul>
         </div>
       </section>

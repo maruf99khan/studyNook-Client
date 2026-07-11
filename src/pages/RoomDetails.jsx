@@ -14,7 +14,6 @@ export default function RoomDetails(){
   const [showBook,setShowBook]=useState(false);
   const [showEdit,setShowEdit]=useState(false);
   const [form,setForm]=useState({date:"", start:"08:00", end:"09:00", note:""});
-  // edit form
   const [editData,setEditData]=useState({});
 
   useEffect(()=>{
@@ -29,9 +28,7 @@ export default function RoomDetails(){
   if(load) return <Spinner/>;
   if(!room) return <p className="text-center py-20">Room not found</p>;
 
-  const isOwner = user && room.owner === user.email || room.ownerId === user?.uid || room.ownerEmail === user?.email;
-  // fallback check via email or uid
-  const ownerCheck = user && (room.owner == user.email || room.ownerEmail == user.email);
+  const ownerCheck = user && room.ownerEmail === user.email;
 
   const total = (parseInt(form.end)-parseInt(form.start))*room.hourlyRate || 0;
 
@@ -42,7 +39,6 @@ export default function RoomDetails(){
       await api.post("/api/bookings",{roomId: id, date: form.date, startTime: form.start, endTime: form.end, note: form.note});
       toast.success("Room booked successfully!");
       setShowBook(false);
-      // refresh bookingCount
       const r = await api.get(`/api/rooms/${id}`);
       setRoom(r.data);
     }catch(e){
@@ -74,7 +70,7 @@ export default function RoomDetails(){
 
   return (
     <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-8">
-      <img src={room.image} className="w-full h-[380px] object-cover rounded-2xl border border-line" alt="" />
+      <img src={room.image} className="w-full h-[380px] object-cover rounded-2xl border border-line" alt={room.name} />
       <div className="grid md:grid-cols-3 gap-8 mt-6">
         <div className="md:col-span-2">
           <h1 className="font-display text-[28px] font-bold text-ink">{room.name}</h1>
@@ -153,4 +149,3 @@ export default function RoomDetails(){
     </div>
   )
 }
-// details booked
